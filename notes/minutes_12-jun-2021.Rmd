@@ -1,0 +1,102 @@
+# Git Commands
+
+git clone <link from GitHub>
+
+git diff <filename> will show you what has been changed.
+
+Always have an empty line at the end of Rprofile. 
+
+git add . (to add everything that has been modified). 
+
+git status will show you what has been modified, staged, or committed. 
+
+git commit -m "(include message)"
+
+origin is an arbitrary name for the network branch
+
+git push == git push -u origin main
+
+git shash -u  stashes away unstaged and untracked changes
+
+git stash pop  pop out what was stashed before
+
+git fetch   check to see if there's anything to pull down. If there is delta there is something to pull down.
+
+git pull  brings down changes from central repository and adds them to local directory. 
+
+--------------------------------------------------------------------------------
+
+Romeo's Notes:
+
+## Step 1: Change the domain name of our website
+
+- Go to netlify.com
+- Go to Cog Sci web domain 
+- Change the name
+
+## Step 2: Allow access to website repo to team members
+
+- Go to GitHub online
+- Send email invites to the group members from GitHub settings
+- Copy the web URL of the repo for the next step
+
+## Step 3: Git push to verify access to repo by other members
+
+- Go to terminal
+- navigate to the directory that will contain the directory we will clone from GitHub
+
+```{r include=TRUE, eval=FALSE}
+cd <local directory>
+git clone <unique address of the GitHub repo (from step 2)> # This will establish a link of the remote directory with the local directory
+cd opencogsci
+git remote -v # To show what happened
+```
+
+## Step 4: Make a change in file to push to the repo
+
+- we changed the following in the .Rprofile (note: Always have an empty line at the end of Rprofile).
+
+```{r include=TRUE, eval=FALSE}
+blogdown.knit.on_save = FALSE # TRUE was changed to FALSE
+```
+
+- In the terminal, type:
+
+```{r include=TRUE, eval=FALSE}
+git diff --cached .Rprofile
+git add . # . represents everything in the directory
+git status # Shows all the files that are new (not the ones in the git ignore). This is to make sure that we have all the right files in the commit. git status will show you what has been modified, staged, or committed. 
+git commit -m "changed to not knit on save" # We seal the current status with a short message
+git status
+git push # This is the same as: git push -u origin main
+```
+
+- If the push was successful, then the access privilege has been granted.
+- Note: Keychain must contain PAT
+
+# Dealing with merge conflict
+
+This is an essential step to sync up the local versions to the changes that happened upstream. 
+
+## Step 1: 
+
+- Take a snapshot of the workspace:
+
+```{r include=TRUE, eval=FALSE}
+git stash -k -u # This is like clearing your table; all the changes that were made to the local files will be saved out of the current "workspace". This prevents merge conflicts when you will subsequently pull from the repo and helps you sync up with upstream.
+# -k unstaged
+# -u untracked changes
+git stash pop # To pop out anything that was stashed
+```
+
+- Now we pull from the repo
+```{r include=TRUE, eval=FALSE}
+git fetch   #check to see if there's anything to pull down. If there is delta there is something to pull down.
+git remote -v # To do a git fetch
+git pull  # brings down changes from central repository and adds them to local directory. 
+```
+
+# Action items for next week
+
+- Readings shared on slack `#resource` channel
+- Potentially write an article for the blog and change theme
