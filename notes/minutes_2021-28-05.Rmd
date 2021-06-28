@@ -1,0 +1,146 @@
+---
+title: "Meeting Minutes"
+author: "Romeo Penheiro"
+date: "28 May 2021"
+output: html_document
+---
+
+# Check-in with the members
+
+- Tristan and Romeo were able to get the `bookdown` page running locally last week
+- Chunyun decided to facilitate the meeting discussion today on accessing `bookdown` page using netlify (steps shared below)
+- Romeo took meeting minutes
+
+## Step 1: Check if git exists locally through `brew`
+
+- Check if git exists locally using your terminal or the terminal on RStudio
+
+```{r include=TRUE, eval=FALSE}
+brew info git
+```
+
+## Step 2: Set up git using `account setting configurations` `gitconfig`
+
+- Set up git username (note: all of us are mac users so the commands are for mac computers)
+
+```{r include=TRUE, eval=FALSE}
+git config --show-origin --global --get user.name
+```
+
+- Set up git password through GitHub's Personal Access Token. This is important as the development version of `blogdown` is currently only available on GitHub (reading: https://happygitwithr.com/github-pat.html).
+
+- Check configured settings in `.gitconfig` (command + shift + period in the Home folder)
+
+## Step 3: Generate GitHub personal access token
+
+- Log-in to your GitHub account
+- Go to Developer settings > PAT
+- Select repo, workflow, gist, user (and other scopes for this specific PAT)
+- Click `update/generate token`
+- For further reading, check out https://docs.github.com/en/fithub/getting-started-with-github/getting-started-with-git/caching-your-github-credentials-in-git
+
+## Step 4: Linking R `bookdown` to git
+
+- Naviate to the directory that contains the `.Rprofile` for the `blogdown` page and open it
+- Check to verify that it looks like the one below:
+
+```{r include=TRUE, eval=FALSE}
+source("renv/activate.R")
+# REMEMBER to restart R after you modify and save this file!
+
+# Now set options to customize the behavior of blogdown for this project. Below
+# are a few sample options; for more options, see
+# https://bookdown.org/yihui/blogdown/global-options.html
+options(
+  # to automatically serve the site on RStudio startup, set this option to TRUE
+  blogdown.serve_site.startup = FALSE,
+  # to disable knitting Rmd files on save, set this option to FALSE
+  blogdown.knit.on_save = TRUE,
+  # build .Rmd to .html (via Pandoc); to build to Markdown, set this option to 'markdown'
+  blogdown.method = 'html',
+  blogdown.author = "First Last",
+  blogdown.ext = ".Rmd",
+  blogdown.subdir = "post"
+)
+
+# fix Hugo version
+options(blogdown.hugo.version = "0.83.1")
+```
+
+- Create a file called `.gitignore`
+- Copy and paste the following in the empty file
+
+```{r include=TRUE, eval=FALSE}
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+Thumbs.db
+renv
+/public
+/resources
+```
+
+- In RStudio console, type and enter the following to connect RStudio with the PAT:
+```{r include=TRUE, eval=FALSE}
+blogdown::config_netlify()
+renv::install("usethis")
+gitcreds::gitcreds_set()
+credentials::set_github_pat()
+
+# Copy and paste the PAT from GitHub when prompted
+```
+
+- For further reading, check out: https://usethis.r-lib.org/articles/articles/git-credentials.html#put-your-pat-into-the-git-credential-store
+
+## Step 5: Committing the `bookdown` project to git
+
+- On the RStudio command line, enter the following:
+
+```{r include=TRUE, eval=FALSE}
+git init # You do it only once – when you are preparing to use a directory. Next time, we don't need to do it. Just git add, git commit, and git push. It's important to note that the git init happens only once in the lifetime of a directory.
+git add . # . represents everything in the directory
+git status # Shows all the files that are new (not the ones in the git ignore). This is to make sure that we have all the right files in the commit.
+git commit # We seal the current status
+
+# When prompted to enter a message, you describe the current commit with a description. You can make a short/long form git comment. 
+
+```
+
+## Step 6: Push the git commit to GitHub
+
+- On GitHub, create a new repo:
+
+```{r include=TRUE, eval=FALSE}
+New repo > create new repo > opencogsci
+```
+
+- Copy the path to the new repo and add the path below:
+
+```{r include=TRUE, eval=FALSE}
+git remote add origin <path> # current repo in rstudio connect here (so type this code in the rstudio console)
+git remote -v # To show what happened
+git branch -M main # Creates a branch of the name "main"
+git push -u origin main
+```
+
+## Step 7: Open netlify
+
+- Follow the prompts on the website to open a free account
+- You will have to connect your GitHub account to select the repo containing the `bookdown` project
+- Deploy the site
+- You may change the site name from the random alphanumerals to something specific
+
+# Action items for next week
+
+- Readings shared on slack `#resource` channel
+    + Pro Git book: https://git-scm.com/book/en/v2
+    + Simplified version of Pro Git book: https://www.git-tower.com/learn/git/ebook/en/command-line/basics/what-is-version-control/
+    + Tutorial on what was accomplished in the meeting: https://alison.rbind.io/blog/2020-12-new-year-new-blogdown/
+    + Similar tutorial: https://blog.rstudio.com/2021/01/18/blogdown-v1.0/
+
+- Independently write content for the blog
+(note content will be in draft phase right now and is amenable to extensive edits)
+
+- Experiment with new `blogdown` templates (if possible)
