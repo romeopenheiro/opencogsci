@@ -1,0 +1,66 @@
+---
+title: "Meeting Minutes"
+author: "Romeo Penheiro"
+date: "24 June 2021"
+output: html_document
+---
+
+In today's meeting, we decided to learn branching. Branching is essential when we are working on a new feature. It allows us to add a new feature in a branch, away from the main branch. Making changes and reviews by collaborators are also made easy through this process.
+
+We also brainstormed some ideas for future posts. They are listed below:
+
+- TIL: Today I Learned
+- Our vision and/or mission og OpenCogSci
+- Something related to graduate student life
+- Tips and tricks in R
+- Have a link to CM's website for RStats
+- Make improvements to CM's course by making pull requests
+- RP's ideas: can write on my personal experience in the course, add resources for advanced stats, contribute to chapter 14, and/or add an exmaple of data wrangling using untidy dataset. 
+
+That's it. So, back to branching...
+
+## Step 1: Get local repo up to speed
+
+- Local repo will be syced with the remote repo
+
+```{r include=TRUE, eval=FALSE}
+git checkout main
+git fetch origin
+git reset --hard origin/main # This has an irreversible consequence where any unsaved commits will be deleted. We can instead use...
+git rebase # This allows us to insert a commit within a tree of changes
+```
+
+
+## Step 3: Create a new branch
+
+```{r include=TRUE, eval=FALSE}
+git checkout -b test-branch # The printout will show that you have switched to a new branch 'test-branch'. So, this create a new branch AND switches you to the new branch
+git branch # The printout will confirm that a new branch is created
+
+```
+
+## Step 4: Edit something in content
+
+```{r include=TRUE, eval=FALSE}
+ls
+cd content
+open About.md # Here RP changed the content of the post
+git status # git status will show you what has been modified, staged, or committed. 
+```
+
+## Step 5: Commit the changes
+
+```{r include=TRUE, eval=FALSE}
+git add . # . represents everything in the directory
+git status # Shows all the files that are new (not the ones in the git ignore). This is to make sure that we have all the right files in the commit. 
+git commit -m "changed the about section" # We seal the current status with a short message
+git status
+git push -u origin test-branch 
+```
+
+## Step 6: Pull Request
+
+- Go to GitHUB GUI (browser)
+- In the `opensogsci` repo, you will have to click on the green button for `compare & pull request`
+- Write a substantive summary of what were changed and click `pull request`
+- Any comments left by collaborators will show up on the tab `Pull Requests`
