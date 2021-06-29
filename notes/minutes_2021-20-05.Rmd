@@ -1,0 +1,54 @@
+---
+title: "Meeting Minutes"
+author: "Romeo Penheiro"
+date: "20 May 2021"
+output: html_document
+---
+
+In Attendance:
+
+Chunyun Ma
+Romeo Penheiro
+Tristan Shaeen
+
+Today was the inaugural meeting of the yet-to-be-named open science club
+
+In today's meeting we began by exchanging ideas regarding our relevant interests/values.
+Some of the interests/values included: 
+
+- Open science
+- Reproducible research
+- Equity/accessibility
+- Statistical analyses
+- Data viz
+- Programming languages/tools
+- Peer education
+
+We then proceeded to brainstorms projects that could integrate these interests/values over time, 
+with a special emphasis on choosing projects and project steps that are sustainable, achievable, and iterative.
+Taking the summer months as our first considered time horizon, 
+we made it our first long term goal to develop a website of a yet undefined level of complexity
+to serve as a space where we can publish articles on our aforementioned interests 
+and document the process of putting together this very site.
+Functionally speaking, 
+this website would therefore serve as an accessible entry point for others, 
+and an infinite space for us to grow, learn, and share that knowledge.
+With this long term goal in mind,
+we set about envisioning short to medium term steps to achieve it,
+articulating the more immediate steps in concrete and actionable terms. 
+These near term steps are:
+
+1. Each creates a blogdown page that is running on our local environments. 
+2. Arbitrarily choose one of them and upload to GitHub.
+3. Spend as long as needed (estimated 1-3 weeks) to get familiar with using Git to engage in shared development.
+4. Once working proficiency is achieved, assess what kind of content we want to publish, and create a new short-medium term plan.
+
+It was agreed that Chunyun would make a Slack page for communication and that the first deliverable due next week would be Step 1.
+
+A special note was made to be mindful of or document our time and be unashamed to indicate whether or not the weekly deliverables are too cumbersome.
+This club is for fun! 
+
+These are the meeting minutes as I have interpreted and remembered them :).
+
+Tristan Shaeen 
+
