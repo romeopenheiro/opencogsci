@@ -38,7 +38,8 @@ we set about envisioning short to medium term steps to achieve it,
 articulating the more immediate steps in concrete and actionable terms. 
 These near term steps are:
 
-1. Each creates a blogdown page that is running on our local environments. 
+1. Each creates a blogdown page that is running on our local environments.
+   https://bookdown.org/yihui/blogdown/.
 2. Arbitrarily choose one of them and upload to GitHub.
 3. Spend as long as needed (estimated 1-3 weeks) to get familiar with using Git to engage in shared development.
 4. Once working proficiency is achieved, assess what kind of content we want to publish, and create a new short-medium term plan.
