@@ -1,0 +1,185 @@
+---
+title: "Meeting Minutes"
+author: "Romeo Penheiro"
+date: "28 June 2021"
+output: html_document
+---
+
+In today's meeting, we picked up from where we left off at the last meeting. Check out the meeting minutes to verify what was done. Today, we will continue from Step 8 and merge `test-branch` and `cool-branch`. We will also create a new branch `notes` for meeting minutes.
+
+## Step 8: Collaborator reviews and accepts the changes
+
+- Here, RP is going to review TS's changes (This section is a work in progress. Please check the next meeting minutes to check what was done.)
+
+```{r include=TRUE, eval=FALSE}
+git branch -a # Green: local, Red: remote
+git fetch -a # Same as git fetch origin
+git pull
+
+# To see the difference use any of the following commands
+git diff c6870e2a844d2b15668906dd826ab94c437824c9..412529e833cd0b8482fd24f399969f44d33477c1 
+git diff c6870e2a844d2b15668906dd826ab94c437824c9..412529e833cd0b8482fd24f399969f44d33477c1 --content/about.md 
+git diff c6870e2..412529e
+
+```
+
+## Step 9: Edit something in content
+
+```{r include=TRUE, eval=FALSE}
+open About.md # RP uses TextEditor
+# Added an empty final line
+git status # git status will show you what has been modified, staged, or committed. 
+```
+Note: you can use `control + c` to kill a process
+
+Why is it important to add an empty line at the end of the line?
+
+It could be something to do with convention and/or compatibility of files among Windows/MAC users. RP did a quick search to find out what it is about - didn't find anything.
+
+## Step 10: Commit and push the changes
+
+```{r include=TRUE, eval=FALSE}
+git add .
+git commit -m "<add a commit message>"
+git log # to see the history of git commits, all commits in the test branch, check out below all the recipes
+git branch -a # or...
+git branch -vv # to see where I am
+git push # Don't have to mention -u test-branch
+```
+
+* https://github.com/jmmendivil/git-log-recipes
+
+## Step 11: Merge the branches
+
+```{r include=TRUE, eval=FALSE}
+git checkout main # Or git switch main
+git pull # This is to sync with the remote repo (test-branch)
+git pull origin test-branch # This is to consolidated the final version of test branch and then merge to the main branch
+git push # Step to perform the merge to the remote repo. The steps before this were done locally. If the pull request is successfully merged and closed, you will see it in GitHub GUI browser.
+
+```
+
+
+Next, RP made changes to `cool-branch` for TS to checkout and merge. This are the same steps as those from the last meeting (you can find the notes under Step 4. They have been added before for ease of reading).
+
+## Step 12: Synch the local repo
+
+Before the edit, RP had to update the local repo with the remote `cool-branch` repo
+
+```{r include=TRUE, eval=FALSE}
+git branch -a # Green: local, Red: remote; This step is to check what branch HEAD of local repo is on and if we need to switch. The printout will give a list of branches that the local repo currently has.
+git fetch --all 
+git branch -a # Prints all the branches, both local and remote
+git checkout cool-branch
+
+```
+
+## Step 13: Edit something in content in `cool-branch`
+
+
+```{r include=TRUE, eval=FALSE}
+ls
+cd content
+nvim About.md # We actually decided NOT to carry out this step as RP had made changes here in his 'test-branch'. Instead, TS used...
+nvim Lorem Ipsum # There were some tech issues on TS's side. He had to use control + c to toggle between save and edit mode on nvim. Usually, esc can be used to exit the text editor, but he wasn't able to use it because Zoom shreen sharing service had a tech issue. *
+git status # git status will show you what has been modified, staged, or committed. 
+
+open <filename> # It was a boiler-plate post
+# Deleted all the latin in the post and added some blank lines at the end of the file
+git status # git status will show you what has been modified, staged, or committed.
+
+```
+
+## Step 14: Commit and push the changes
+
+```{r include=TRUE, eval=FALSE}
+git add .
+git commit -m "<add a commit message>"
+git log # to see the history of git commits, all commits in the test branch, check out below all the recipes
+git branch -a # or...
+git branch -vv # to see where I am
+git push # Don't have to mention -u cool-branch
+```
+
+Next TS repeated steps 8-11 to practice reviewing edits and merging on the terminal.
+
+Notes:
+
+- We don't have to navigate to the directory to work with git. We can use relative paths to refer to files.
+- You can use hjkl instead of arrow keys: https://catonmat.net/why-vim-uses-hjkl-as-arrow-keys
+- In a future lesson, we will have to delete R folder in the main branch
+- We will be meeting on Google Meets from now on
+- Try to be critical of the explanation from CM
+
+# Adding a new branch for our meeting minutes
+
+Resource: https://bookdown.org/yihui/blogdown/configuration.html#options (section: `ignoreFiles`)
+
+
+## Create a new branch `notes`
+
+```{r include=TRUE, eval=FALSE}
+git checkout -b notes # The printout will show that you have switched to a new branch 'notes'
+git status
+
+```
+
+## Change configurations on `yml` header
+
+```{r include=TRUE, eval=FALSE}
+open config.yaml
+# Not sure what was done here. Do you remember TS?
+        
+```
+
+## Add `notes` to .gitignore
+
+```{r include=TRUE, eval=FALSE}
+open .gitignore
+# append the following line 
+ - notes$ # $ indicates end of the name
+# Save and close the file
+        
+```
+
+
+## Make a new dir called `notes`
+
+```{r include=TRUE, eval=FALSE}
+mkdir notes
+        
+```
+
+## Move minutes to `notes` and renaming
+
+```{r include=TRUE, eval=FALSE}
+mv <file path> a notes/
+
+        
+mv <file path> # changing the name
+stat <new file name> # I don't recall what this was for. 
+        
+```
+
+Note: the files will be named in the following convention minutes_YYYY-MM-DD
+
+## An accidental reset
+
+```{r include=TRUE, eval=FALSE}
+We unstage everything 
+git reset # We accidentally unstaged everything and the changes we made were no longer tracked. The printout shows was unstaged and here we noticed that the notes directory was not there so we did a ...
+git status # we realized it was untracked. Reset unstaged everything, even the creation of notes dir, and the files inside. So we had to do atomic commits.
+
+```
+
+
+## Atomic stage, commit, and pull
+
+```{r include=TRUE, eval=FALSE}
+git add config.yaml # atomic commit
+git commit -m "added the notes folder to .ignorefiles"
+git add notes/
+git commit -m "added a notes folder and minutes inside"
+git push -u origin notes 
+```
+
