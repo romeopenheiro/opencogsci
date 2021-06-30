@@ -41,7 +41,7 @@ git config --show-origin --global --get user.name
 
 ## Step 4: Linking R `bookdown` to git
 
-- Naviate to the directory that contains the `.Rprofile` for the `blogdown` page and open it
+- Navigate to the directory that contains the `.Rprofile` for the `blogdown` page and open it
 - Check to verify that it looks like the one below:
 
 ```{r include=TRUE, eval=FALSE}
@@ -121,8 +121,8 @@ New repo > create new repo > opencogsci
 ```{r include=TRUE, eval=FALSE}
 git remote add origin <path> # current repo in rstudio connect here (so type this code in the rstudio console)
 git remote -v # To show what happened
-git branch -M main # Creates a branch of the name "main"
-git push -u origin main
+git branch -M main # Changes the name of the master branch from "master" to "main".
+git push -u origin main # Pushes the changes to the remote branch. 
 ```
 
 ## Step 7: Open netlify
