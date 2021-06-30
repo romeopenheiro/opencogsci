@@ -1,0 +1,107 @@
+---
+title: "Meeting Minutes"
+author: "Romeo Penheiro"
+date: "27 June 2021"
+output: html_document
+---
+
+In today's meeting, we wanted to establish a new branch for TS to work on in parallel with the branch that was created by RP at our last meeting. 
+
+## Step 1: Check the local and remote repos
+
+```{r include=TRUE, eval=FALSE}
+git fetch origin # Gets metadata to see if anything is different between the local and remote repos
+git status # git status will show you what has been modified, staged, or committed. 
+git diff # There is no differences to report BUT...
+git diff main origin/main # The printout here shows there is a difference between the two repos "main" and "origin/main". The order of the parameters is important as the difference reported relative to the first. So, in the printout, the "-" and "+" refer to lines removed and added respectively in "origin/main".
+```
+
+* In a subsequent meeting, we can print the difference between two specific files side-by-side to easily interpret the changes. 
+
+## Step 2: Pull the changes to update the local repo
+
+```{r include=TRUE, eval=FALSE}
+git pull # Here the default is a "fast-forward" flag, so we don't have to use specify the parameter. However, when there is a conflict we cannot use "git pull fast-forward" and may have to instead try "git merge"
+# The printout will show what has been updated.
+```
+
+*Again, we can try `git merge` at another meeting.
+
+## Step 3: Create a new branch
+
+```{r include=TRUE, eval=FALSE}
+git checkout -b cool-branch # The printout will show that you have switched to a new branch 'cool-branch'
+git status
+
+```
+
+## Step 4: Edit something in content
+
+```{r include=TRUE, eval=FALSE}
+ls
+cd content
+nvim About.md # We actually decided NOT to carry out this step as RP had made changes here in his 'test-branch'. Instead, TS used...
+nvim Lorem Ipsum # There were some tech issues on TS's side. He had to use control + c to toggle between save and edit mode on nvim. Usually, esc can be used to exit the text editor, but he wasn't able to use it because Zoom shreen sharing service had a tech issue. *
+git status # git status will show you what has been modified, staged, or committed. 
+```
+
+* We may try to use Google Hangouts to see if that makes screen sharing easier.
+
+## Step 5: Commit the changes
+
+```{r include=TRUE, eval=FALSE}
+git add . # . represents everything in the directory
+git status # Shows all the files that are new (not the ones in the git ignore). This is to make sure that we have all the right files in the commit. 
+git commit -m "with a message" # We seal the current status with a short message
+git status
+git push -u origin cool-branch 
+```
+
+## Step 6: Pull Request
+
+- Go to GitHUB GUI (browser)
+- In the `opensogsci` repo, you will have to click on the green button for `pull request`
+- We can use this aspect of GitHub to make comments on commits. We can also make edits to TS's work. (to practice this, TS left a comment on RP's branch 'test-branch')
+- Any comments left by collaborators will show up on the tab `Pull Requests`
+
+## Step 7: Make edits on a collaborator's branch
+
+- To make any edits, you will have to go to the terminal
+- Before you make any edits, you will have to sync local and remote repos
+
+```{r include=TRUE, eval=FALSE}
+git branch # To check what branch HEAD of local repo is on and if we need to switch The printout will give a list of branches that the local repo currently has.
+git fetch --all # Affects the meta-data
+git branch -a # Prints all the branches, both local and remote
+git checkout test-branch 
+
+nvim About.md # Review and make changes to RP's input
+
+git add .
+git commit -m "contributed to RP's about page update"
+git push -u origin test-branch
+```
+
+More on this can be read here: https://www.atlassian.com/git/tutorials/using-branches/git-checkout 
+
+## Step 8: Collaborator reviews and accepts the changes
+
+- Here, RP is going to review TS's changes (This section is a work in progress. Please check the next meeting minutes to check what was done.)
+
+```{r include=TRUE, eval=FALSE}
+git branch -a # Green: local, Red: remote
+git fetch -a # Same as git fetch origin
+git pull
+
+# To see the difference use any of the following commands
+git diff c6870e2a844d2b15668906dd826ab94c437824c9..412529e833cd0b8482fd24f399969f44d33477c1 
+git diff c6870e2a844d2b15668906dd826ab94c437824c9..412529e833cd0b8482fd24f399969f44d33477c1 --content/about.md 
+git diff c6870e2..412529e
+
+```
+
+
+
+
+
+
