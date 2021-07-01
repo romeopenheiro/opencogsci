@@ -42,9 +42,12 @@ It could be something to do with convention and/or compatibility of files among 
 git add .
 git commit -m "<add a commit message>"
 git log # to see the history of git commits, all commits in the test branch, check out below all the recipes
-git branch -a # or...
-git branch -vv # to see where I am
-git push # Don't have to mention -u test-branch
+
+git branch # to see local branches and which one I am on
+git branch -a # to see above + local repo's understanding of the branches that exist in the remote repo
+git branch -vv # to see local branches + most recent commits
+
+git push # Don't have to mention -u test-branch, because tracking branch has already been established in the past. 
 ```
 
 * https://github.com/jmmendivil/git-log-recipes
@@ -124,18 +127,10 @@ git status
 
 ```
 
-## Change configurations on `yml` header
+## Add `notes` to config.yaml
 
 ```{r include=TRUE, eval=FALSE}
-open config.yaml
-# Not sure what was done here. Do you remember TS?
-        
-```
-
-## Add `notes` to .gitignore
-
-```{r include=TRUE, eval=FALSE}
-open .gitignore
+open .config.yaml
 # append the following line 
  - notes$ # $ indicates end of the name
 # Save and close the file
@@ -157,7 +152,7 @@ mv <file path> a notes/
 
         
 mv <file path> # changing the name
-stat <new file name> # I don't recall what this was for. 
+stat <new file name> # this shows metadata relating to a particular file's history. Can be useful for example figuring out when a file was created.  
         
 ```
 
