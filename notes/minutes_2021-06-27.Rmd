@@ -25,7 +25,7 @@ git pull # Here the default is a "fast-forward" flag, so we don't have to use sp
 # The printout will show what has been updated.
 ```
 
-*Again, we can try `git merge` at another meeting.
+* Again, we can try `git merge` at another meeting.
 
 ## Step 3: Create a new branch
 
@@ -54,7 +54,7 @@ git add . # . represents everything in the directory
 git status # Shows all the files that are new (not the ones in the git ignore). This is to make sure that we have all the right files in the commit. 
 git commit -m "with a message" # We seal the current status with a short message
 git status
-git push -u origin cool-branch 
+git push -u origin cool-branch # the -u flag creates a tracking branch. Once created, it is no longer needed to push this branch to the remote repository. 
 ```
 
 ## Step 6: Pull Request
