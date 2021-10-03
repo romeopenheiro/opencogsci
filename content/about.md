@@ -7,7 +7,7 @@ Currently, there are only two official and one honorary members in this club.
 
 ### Romeo Penheiro
 
-...
+I am a graduate student at the [Department of Cognitive Science](https://carleton.ca/cognitivescience/) at [Carleton University](https://carleton.ca). More precisely, I work under the supervision of [Dr. Georg Northoff](http://www.georgnorthoff.com). I have a very keen interest in statistical machine learning, computational neuroscience, and data reproducibility. You can learn more about my work in [my personal website](https://romeopenheiro.netlify.app).
 
 ### Tristan Shaeen
 
