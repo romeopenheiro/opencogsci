@@ -1,0 +1,159 @@
+---
+title: "Meeting Minutes"
+author: "Romeo Penheiro"
+date: "27 October 2021"
+output: html_document
+---
+
+# Something worth noting is that a lot of the http links used in the tutorial are inactive.
+
+```{r packages, message = FALSE, echo=T}
+# Install xfun so that I can use xfun::pkg_load2
+if (!requireNamespace('xfun')) install.packages('xfun')
+xf <- loadNamespace('xfun')
+
+cran_packages = c(
+        "httr",
+        "import",
+        "jsonlite"
+)
+
+if (length(cran_packages) != 0) xf$pkg_load2(cran_packages)
+
+import::from(magrittr, '%>%')
+# gg <- import::from(ggplot2, .all=TRUE, .into={new.env()})
+# dp <- import::from(dplyr, .all=TRUE, .into={new.env()})
+```
+
+```{r eval=FALSE}
+Get
+Retrieve whatever is specified by the URL
+
+Post
+Create resource at URL with data in body
+
+Put
+Update recluse at URL with data in body
+
+Delete
+Delete resource at URL
+
+
+```
+
+
+```{r}
+# Get the data
+r <- httr::GET("http://httpbin.org/get",
+               add_headers(Name = "Romeo")
+               ) 
+# Adding a header
+```
+
+```{r}
+# To create new resources to server
+# For people to access it
+# URL does not exist
+
+url <- "http://httpbin.org/post"
+body <- list(a = 1, b = 2, c =3)
+
+r <- httr::POST(url, body = body, encode = "form")
+r <- httr::POST(url, body = body, encode = "multipart")
+r <- httr::POST(url, body = body, encode = "raw")
+r <- httr::POST(url, body = body, encode = "json")
+
+
+```
+
+
+```{r}
+JSON - collection of key-value pairs
+
+toJSON - takes a R list and turns it in to a JSON file
+fromJSON - takes a JSON file and turns it in to an R list
+
+```
+
+```{r}
+# Verbose function
+# to view the http request that httr sends
+# prints the responds
+
+```
+
+```{r}
+# Status code ("stats" code)
+# http://http.cats
+
+
+```
+
+```{r}
+r <- httr::GET("http://httpbin.org/get")
+r
+```
+
+```{r}
+# One of the first few info to extract is stats code
+r$status_code
+
+# Human understandable
+httr::http_status(r) 
+```
+
+```{r}
+# Warns that stats code is not 200
+# Program defensively with the following functions
+
+r2 <- r
+r2$status_code <- 404
+
+httr::warn_for_status(r2)
+
+httr::stop_for_status(r2)
+
+```
+
+
+```{r}
+# Extract headers
+
+httr::headers(r)
+```
+
+```{r}
+# Extract server tab
+
+httr::headers(r)$server
+```
+
+```{r}
+# Extract content from the body 
+# HEre is where all the data should be
+
+r$content
+```
+
+
+```{r}
+# Helper function helps to parse the contents of the body
+# Mention the type of the content e.g. "raw", "text", "parse"
+
+httr::content(r, "raw")
+
+```
+
+
+```{r}
+# Example
+
+frozen_url <- httr::GET("http://www.omdbapi.com/?t=frozen")
+
+```
+
+```{r}
+details <- httr::content(frozen_url, "parse")
+details$Error
+```
+
