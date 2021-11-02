@@ -1,3 +1,4 @@
+.Renviron
 .Rproj.user
 .Rhistory
 .RData
@@ -8,3 +9,4 @@ renv
 /public
 /resources
 /scripts
+
