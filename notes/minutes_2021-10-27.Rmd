@@ -1,159 +1,137 @@
 ---
 title: "Meeting Minutes"
-author: "Romeo Penheiro"
+author: "Romeo Penheiro", "Chunyun Ma"
 date: "27 October 2021"
 output: html_document
 ---
 
-# Something worth noting is that a lot of the http links used in the tutorial are inactive.
+```{r include=FALSE}
+knitr::opts_chunk$set(
+  comment = "",
+  results = "hold"
+  )
+```
 
-```{r packages, message = FALSE, echo=T}
+```{r packages, message = FALSE}
 # Install xfun so that I can use xfun::pkg_load2
 if (!requireNamespace('xfun')) install.packages('xfun')
-xf <- loadNamespace('xfun')
-
 cran_packages = c(
-        "httr",
-        "import",
-        "jsonlite"
+        "httr"
 )
 
-if (length(cran_packages) != 0) xf$pkg_load2(cran_packages)
-
-import::from(magrittr, '%>%')
-# gg <- import::from(ggplot2, .all=TRUE, .into={new.env()})
-# dp <- import::from(dplyr, .all=TRUE, .into={new.env()})
+if (length(cran_packages) != 0) xfun::pkg_load2(cran_packages)
 ```
 
-```{r eval=FALSE}
+## Keywords and references
+
 Get
-Retrieve whatever is specified by the URL
+: Retrieve whatever is specified by the URL
 
 Post
-Create resource at URL with data in body
+: Create resource at URL with data in body
 
 Put
-Update recluse at URL with data in body
+: Update recluse at URL with data in body
 
 Delete
-Delete resource at URL
+: Delete resource at URL
 
+`JSON`
+: collection of key-value pairs
 
-```
+toJSON
+: takes a R list and turns it in to a JSON file
 
+fromJSON
+: takes a JSON file and turns it in to an R list
+
+Status code
+: <http://http.cats>
+
+## Example snippets
+
+### Get the data
 
 ```{r}
-# Get the data
-r <- httr::GET("http://httpbin.org/get",
-               add_headers(Name = "Romeo")
-               ) 
-# Adding a header
+# Optionally, adding a header in the json format
+receive <- httr::GET(
+  "http://httpbin.org/get",
+  httr::add_headers(Name = "Romeo")
+)
+receive
 ```
 
-```{r}
-# To create new resources to server
-# For people to access it
-# URL does not exist
+### Publish data on server
 
+```{r}
 url <- "http://httpbin.org/post"
 body <- list(a = 1, b = 2, c =3)
 
-r <- httr::POST(url, body = body, encode = "form")
-r <- httr::POST(url, body = body, encode = "multipart")
-r <- httr::POST(url, body = body, encode = "raw")
-r <- httr::POST(url, body = body, encode = "json")
+publish <- httr::POST(url, body = body, encode = "form")
+publish
+## Other examples
+# publish <- httr::POST(url, body = body, encode = "multipart")
+# publish <- httr::POST(url, body = body, encode = "raw")
+# publish <- httr::POST(url, body = body, encode = "json")
+```
 
+### Parsing received data
 
+#### Status code {-}
+
+```{r}
+receive$status_code
+```
+
+Human understandable:
+
+```{r}
+httr::http_status(receive) 
 ```
 
 
-```{r}
-JSON - collection of key-value pairs
+Program defensively with the following functions
+to warn when status code is not 200
 
-toJSON - takes a R list and turns it in to a JSON file
-fromJSON - takes a JSON file and turns it in to an R list
+<!-- Don't evaluate the next chunk, or this rmarkdown file will not knit. -->
 
+```{r eval=FALSE}
+receive2 <- receive
+receive2$status_code <- 404
+httr::warn_for_status(receive2)
+httr::stop_for_status(receive2)
 ```
 
-```{r}
-# Verbose function
-# to view the http request that httr sends
-# prints the responds
+#### Headers {-}
 
+```{r}
+httr::headers(receive)
 ```
 
+Extract server
+
 ```{r}
-# Status code ("stats" code)
-# http://http.cats
-
-
+httr::headers(receive)$server
 ```
 
+#### Content body of received data {-}
+
+By default, the content will be binary.
+
 ```{r}
-r <- httr::GET("http://httpbin.org/get")
-r
+receive$content
+
+# equivalent to
+# httr::content(receive, "raw")
 ```
 
-```{r}
-# One of the first few info to extract is stats code
-r$status_code
-
-# Human understandable
-httr::http_status(r) 
-```
+Helper function `httr::content()` helps to parse the contents of the body
+if set type of content to `parse`.
+Other options for type includes `raw` (default) and `text.`
 
 ```{r}
-# Warns that stats code is not 200
-# Program defensively with the following functions
-
-r2 <- r
-r2$status_code <- 404
-
-httr::warn_for_status(r2)
-
-httr::stop_for_status(r2)
-
-```
-
-
-```{r}
-# Extract headers
-
-httr::headers(r)
-```
-
-```{r}
-# Extract server tab
-
-httr::headers(r)$server
-```
-
-```{r}
-# Extract content from the body 
-# HEre is where all the data should be
-
-r$content
-```
-
-
-```{r}
-# Helper function helps to parse the contents of the body
-# Mention the type of the content e.g. "raw", "text", "parse"
-
-httr::content(r, "raw")
-
-```
-
-
-```{r}
-# Example
-
-frozen_url <- httr::GET("http://www.omdbapi.com/?t=frozen")
-
-```
-
-```{r}
-details <- httr::content(frozen_url, "parse")
+frozen <- httr::GET("http://www.omdbapi.com/?t=frozen")
+details <- httr::content(frozen, "parse")
 details$Error
 ```
 
