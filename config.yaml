@@ -1,9 +1,10 @@
 baseurl: /
 languageCode: en-us
-title: My own cool website
-theme: hugo-lithium
+title: Open CogSci
+theme: cupper-hugo-theme
 googleAnalytics: ''
 disqusShortname: ''
+enableGitInfo: true
 ignoreFiles:
   - \.Rmd$
   - \.Rmarkdown$
@@ -13,32 +14,89 @@ ignoreFiles:
   - notes$
 permalinks:
   post: /:year/:month/:day/:slug/
+
+taxonomies:
+  tag: tags
+
+imaging:
+  quality: 99
+
 menu:
-  main:
+  nav:
+    - name: Home
+      url: /
+      weight: 1
+    - name: Blog
+      url: /post/
+      weight: 2
+    - name: Tags
+      url: /tags/
+      weight: 3
     - name: About
       url: /about/
-    - name: GitHub
-      url: https://github.com/RomeoPenheiro
-    - name: Twitter
-      url: https://twitter.com/PenheiroRomeo
+      weight: 4
+    - name: RSS
+      url: /index.xml
+      weight: 5
+
 params:
+  homeMetaContent: 
+  description: Learning skills that are not taught in a conventional classroom setting.
+  footer: Made with [Hugo](https://gohugo.io/). Themed by [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme). Deployed to [Netlify](https://opencogsci.netlify.app).
+  # For more date formats see https://gohugo.io/functions/format/
+  dateFormat: 2006-01-02
+    # not sure about this one
+  codePenUser: someUser
+  # katex: true
   MathJaxCDN: //cdnjs.cloudflare.com/ajax/libs
   MathJaxVersion: 2.7.5
-  description: A website built through Hugo and blogdown.
-  favicon: favicon.ico
+  hideHeaderLinks: false
+  search: true
+  showThemeSwitcher: true
+  defaultDarkTheme: false
+  moveFooterToHeader: false
+    # modify logoAlt [TODO]
+  logoAlt: "An alternative text description of the logo"
   highlightjsCDN: //cdnjs.cloudflare.com/ajax/libs
   highlightjsLang:
     - r
     - yaml
   highlightjsTheme: github
   highlightjsVersion: 9.12.0
-  logo:
-    alt: Logo
-    height: 50
-    url: logo.png
-    width: 50
+  customCss:
+    - css/custom_01.css
+    - css/custom_02.css
+  customJs:
+    - js/custom_01.js
+    - js/custom_02.js
+
 markup:
   defaultMarkdownHandler: goldmark
   goldmark:
+    extensions:
+      definitionList: true
+      footnote: true
+      linkify: true
+      strikethrough: true
+      table: true
+      taskList: true
+      typographer: true
+    parser:
+      attribute: true
+      autoHeadingID: true
     renderer:
-      unsafe: yes
+      hardWraps: false
+      unsafe: true
+      xHTML: false
+  highlight:
+    codeFences: false
+    hl_Lines: ""
+    lineNoStart: 1
+    lineNos: false
+    lineNumbersInTable: true
+    noClasses: true
+    style: monokai
+    tabWidth: 4
+  tableOfContents:
+    endLevel: 6
+    startLevel: 2
